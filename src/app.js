@@ -9,10 +9,7 @@ const logger = require('./logger');
 
 
 const bookmarkRouter = require('./bookmark/bookmark-router');
-
-
 const app = express();
-
 const morganOption = (NODE_ENV ==='production')
   ? 'tiny'
   :'common';
@@ -21,6 +18,7 @@ const morganOption = (NODE_ENV ==='production')
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
+
 
 
 app.use(function validateBearerToken(req, res, next) {
@@ -34,12 +32,9 @@ app.use(function validateBearerToken(req, res, next) {
     // move to the next middleware
     next();
   });
-  app.use('/bookmarks', bookmarkRouter);
-  //app.use(bookmarkRouter);
-
-  app.get('/', (req, res)=>{
-      res.send('Hello world');
-  });
+  
+  app.use('/api/bookmarks', bookmarkRouter);
+  
 
 app.use(function errorHandler(error, req, res, next){
     let response;
